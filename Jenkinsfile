@@ -7,7 +7,9 @@ pipeline {
             args '-u root'
         }
     }
-
+    environment {
+        dependencyTrackApiKey = credentials('dt-key')
+    }
     stages {
         // In this stage we are installaing and configuring bom using cyclonedx and along with that 
         // we are also installing the the depdencies required for the project(nodejs). cyclonedx will be creating a 
@@ -24,7 +26,7 @@ pipeline {
         stage('dependencyTrackPublisher') {
             steps {
                 withCredentials([string(credentialsId: 'dt-key', variable: 'dt-key')]) {
-                    dependencyTrackPublisher artifact: 'bom.json', projectName: 'nodejs', projectVersion: 'my-version', synchronous: true, dependencyTrackApiKey: 'ex4tcaMkEGeQ5s4OPocRHxwBkbckP9M9', projectProperties: [tags: ['tag1', 'tag2'], swidTagId: 'my swid tag', group: 'my group']
+                    dependencyTrackPublisher artifact: 'bom.json', projectName: 'nodejs', projectVersion: 'my-version', synchronous: true, dependencyTrackApiKey: $dependencyTrackApiKey, projectProperties: [tags: ['tag1', 'tag2'], swidTagId: 'my swid tag', group: 'my group']
                 }
             }
         }
