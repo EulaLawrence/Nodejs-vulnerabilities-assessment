@@ -26,7 +26,7 @@ pipeline {
         stage('dependencyTrackPublisher') {
             steps {
                 withCredentials([string(credentialsId: 'dt-key', variable: 'dt-key')]) {
-                    dependencyTrackPublisher artifact: 'bom.json', projectName: 'nodejs', projectVersion: 'my-version', synchronous: true, dependencyTrackApiKey: '$dependencyTrackApiKey', projectProperties: [tags: ['tag1', 'tag2'], swidTagId: 'my swid tag', group: 'my group']
+                    dependencyTrackPublisher artifact: 'bom.json', projectName: 'nodejs', projectVersion: 'my-version', projectId: '1',synchronous: true, dependencyTrackApiKey: '$dependencyTrackApiKey', projectProperties: [tags: ['tag1', 'tag2'], swidTagId: 'my swid tag', group: 'my group']
                 }
             }
         }
